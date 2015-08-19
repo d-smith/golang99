@@ -4,6 +4,9 @@ import (
 	"errors"
 )
 
+
+//TODO - what do these look like using interfaces? And can we use a method receiver on a slice of interfaces?
+
 //Last returns the last element of a non-empty slice, or an error if given an empty slice.
 func Last(s []int) (int, error) {
 	length := len(s)
@@ -21,4 +24,13 @@ func Penultimate(s []int) (int, error) {
 	}
 
 	return s[length - 2],nil
+}
+
+//Kth returns the kth element of a slice, starting with 0. Yah, trivial stuff when using slices...
+func Kth(k int, s []int)(int, error) {
+	if k < 0 || k > len(s) - 1 {
+		return -1, errors.New("k index is out of bounds")
+	}
+
+	return s[k],nil
 }

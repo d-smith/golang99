@@ -34,3 +34,24 @@ func TestPenultimate(t *testing.T) {
 	assert.Nil(t,err)
 	assert.Equal(t,4,n)
 }
+
+func TestKth(t *testing.T) {
+	s := []int{1,2,3,4,5}
+
+	var v int
+	var err error
+
+	v,err = Kth(-1, s)
+	assert.NotNil(t, err)
+
+	v,err = Kth(300, s)
+	assert.NotNil(t, err)
+
+	v,err = Kth(0, s)
+	assert.Nil(t,err)
+	assert.Equal(t, 1, v)
+
+	v,err = Kth(4, s)
+	assert.Nil(t,err)
+	assert.Equal(t, 5, v)
+}
