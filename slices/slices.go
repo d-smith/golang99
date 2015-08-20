@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-
+//To do - can we make these functions methods with an interface{} receiver?
 
 //Last returns the last element of a non-empty slice, or an error if given an empty slice.
 func Last(s []interface{}) (interface{}, error) {
