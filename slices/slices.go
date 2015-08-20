@@ -5,10 +5,9 @@ import (
 )
 
 
-//TODO - what do these look like using interfaces? And can we use a method receiver on a slice of interfaces?
 
 //Last returns the last element of a non-empty slice, or an error if given an empty slice.
-func Last(s []int) (int, error) {
+func Last(s []interface{}) (interface{}, error) {
 	length := len(s)
 	if length == 0 {
 		return -1, errors.New("Can't return last element from zero length slice")

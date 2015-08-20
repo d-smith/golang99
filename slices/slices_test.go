@@ -7,18 +7,21 @@ import (
 
 func TestLast(t *testing.T) {
 	t.Log("given a slice of integers")
-	s := []int{1, 2, 3, 4, 5}
+	s := []interface{}{1, 2, 3, 4, 5}
 
 	t.Log("when last is called, the last element of the slice is returned")
 	last, err := Last(s)
 
 	assert.Nil(t,err)
 	assert.Equal(t,5,last)
+
+	a,_ := Last(s)
+	assert.Equal(t, 10, a.(int) + a.(int))
 }
 
 func TestLastErrCheck(t *testing.T) {
 	t.Log("Given an empty slice")
-	var s []int
+	var s []interface{}
 
 	t.Log("when passed to last, an error is returned")
 	_,err := Last(s)
