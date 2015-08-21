@@ -19,6 +19,14 @@ func TestLast(t *testing.T) {
 	assert.Equal(t, 10, a.(int) + a.(int))
 }
 
+func TestGenericLast(t *testing.T) {
+	s := GenericSlice{1,2,3,4,5}
+	last, err := Last(s)
+
+	assert.Nil(t,err)
+	assert.Equal(t,5,last)
+}
+
 func TestLastErrCheck(t *testing.T) {
 	t.Log("Given an empty slice")
 	var s []interface{}
