@@ -17,7 +17,7 @@ func Last(s []interface{}) (interface{}, error) {
 }
 
 //Penultimate returns the next to last element of a non-empty slice
-func Penultimate(s []int) (int, error) {
+func Penultimate(s []interface{}) (interface{}, error) {
 	length := len(s); if length < 2 {
 		return -1, errors.New("Can't return next to last element from slice of length less than two.")
 	}
@@ -26,7 +26,7 @@ func Penultimate(s []int) (int, error) {
 }
 
 //Kth returns the kth element of a slice, starting with 0. Yah, trivial stuff when using slices...
-func Kth(k int, s []int)(int, error) {
+func Kth(k int, s []interface{})(interface{}, error) {
 	if k < 0 || k > len(s) - 1 {
 		return -1, errors.New("k index is out of bounds")
 	}

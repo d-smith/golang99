@@ -30,18 +30,18 @@ func TestLastErrCheck(t *testing.T) {
 
 func TestPenultimate(t *testing.T) {
 	t.Log("Given a slice of 2 or more integers")
-	s := []int{1,2,3,4,5}
+	s := []interface{}{1,2,3,4,5}
 
 	t.Log("when Penultimate is called, the next to last element is returned")
 	n, err := Penultimate(s)
 	assert.Nil(t,err)
-	assert.Equal(t,4,n)
+	assert.Equal(t,4,n.(int))
 }
 
 func TestKth(t *testing.T) {
-	s := []int{1,2,3,4,5}
+	s := []interface{}{1,2,3,4,5}
 
-	var v int
+	var v interface{}
 	var err error
 
 	v,err = Kth(-1, s)
@@ -52,9 +52,9 @@ func TestKth(t *testing.T) {
 
 	v,err = Kth(0, s)
 	assert.Nil(t,err)
-	assert.Equal(t, 1, v)
+	assert.Equal(t, 1, v.(int))
 
 	v,err = Kth(4, s)
 	assert.Nil(t,err)
-	assert.Equal(t, 5, v)
+	assert.Equal(t, 5, v.(int))
 }
