@@ -71,3 +71,25 @@ func TestKth(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 6, v.(int))
 }
+
+func TestReverse(t *testing.T) {
+	t.Log("Given an empty slice we can Reverse it without error")
+		s := GenericSlice{}
+		s.Reverse()
+
+	t.Log("A single element slice can be reversed")
+	s = append(s,1)
+	s.Reverse()
+	assert.Equal(t, 1, len(s))
+	assert.Equal(t, 1, s[0])
+
+	t.Log("A slice with an even number of elements can be reversed")
+	e := GenericSlice{1,2,3,4}
+	e.Reverse()
+	assert.Equal(t, e, GenericSlice{4,3,2,1} )
+
+	t.Log("A slice with an odd number of elements can be reversed")
+	o := GenericSlice{1,2,3,4,5}
+	o.Reverse()
+	assert.Equal(t, o, GenericSlice{5,4,3,2,1} )
+}

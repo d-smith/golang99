@@ -33,3 +33,20 @@ func (s GenericSlice) Kth(k int) (interface{}, error) {
 
 	return s[k], nil
 }
+
+//Reverse reverses the elements of a slice.
+func (s GenericSlice) Reverse() {
+	n := len(s)
+	if n == 0 {
+		return
+	}
+
+	end := n - 1
+
+	for i := 0; i < n/2; i++ {
+		tmp := s[i]
+		s[i] = s[end]
+		s[end] = tmp
+		end--
+	}
+}
