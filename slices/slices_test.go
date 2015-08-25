@@ -92,4 +92,27 @@ func TestReverse(t *testing.T) {
 	o := GenericSlice{1,2,3,4,5}
 	o.Reverse()
 	assert.Equal(t, o, GenericSlice{5,4,3,2,1} )
+
+	x := o.MakeReverse()
+	assert.NotEqual(t,x,o)
+	o.Reverse()
+	assert.Equal(t, x, o)
+}
+
+func TestIsPalindrome(t *testing.T) {
+	f := func(a interface{}, b interface{}) bool {
+		x := a.(int)
+		y := b.(int)
+		return x == y
+	}
+
+	x := GenericSlice{1,2,3,2,1}
+	assert.True(t, x.IsPalindrome(f))
+
+	y := GenericSlice{1,2,3,4,5}
+	assert.False(t, y.IsPalindrome(f))
+
+	assert.True(t, GenericSlice{}.IsPalindrome(f))
+	assert.True(t, GenericSlice{1}.IsPalindrome(f))
+
 }

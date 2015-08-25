@@ -6,6 +6,7 @@ import (
 
 type GenericSlice []interface{}
 
+//Last returns the last element in a slice
 func (s GenericSlice) Last() (interface{}, error) {
 	length := len(s)
 	if length == 0 {
@@ -49,4 +50,25 @@ func (s GenericSlice) Reverse() {
 		s[end] = tmp
 		end--
 	}
+}
+
+//MakeReverse makes a copy of the slice, reverses the elements in the copy, and returns
+//the reversed copy
+func (s GenericSlice) MakeReverse() GenericSlice {
+	c := make(GenericSlice, len(s))
+	copy(c,s)
+	c.Reverse()
+	return c
+}
+
+//IsPalindrome returns true if the contents of a slice are the same forwards and backwards
+func (s GenericSlice) IsPalindrome(f func(interface{},interface{}) bool) bool {
+	r := s.MakeReverse()
+	for i, v := range s {
+		if !f(v,r[i]) {
+			return false
+		}
+	}
+
+	return true
 }
