@@ -56,16 +56,16 @@ func (s GenericSlice) Reverse() {
 //the reversed copy
 func (s GenericSlice) MakeReverse() GenericSlice {
 	c := make(GenericSlice, len(s))
-	copy(c,s)
+	copy(c, s)
 	c.Reverse()
 	return c
 }
 
 //IsPalindrome returns true if the contents of a slice are the same forwards and backwards
-func (s GenericSlice) IsPalindrome(f func(interface{},interface{}) bool) bool {
+func (s GenericSlice) IsPalindrome(f func(interface{}, interface{}) bool) bool {
 	r := s.MakeReverse()
 	for i, v := range s {
-		if !f(v,r[i]) {
+		if !f(v, r[i]) {
 			return false
 		}
 	}
@@ -75,13 +75,14 @@ func (s GenericSlice) IsPalindrome(f func(interface{},interface{}) bool) bool {
 
 //Flatten looks for GenericSlice elements in a GenericSlice, flattening out their elements such
 //that the Generic slice produced by the function is a single level GenericSlice containing all
-//embedded elements.
+//embedded elements. For example flattening GenericSlice{GenericSlice{1,1},2,GenericSlice{3, GenericSlice{5,8}}}
+//produces GenericSlice{1,1,2,3,5,8}
 func (s GenericSlice) Flatten() GenericSlice {
 	var ns GenericSlice
 	for _, v := range s {
 		switch v.(type) {
-			default:
-				ns = append(ns,v)
+		default:
+			ns = append(ns, v)
 		case GenericSlice:
 			fs := v.(GenericSlice).Flatten()
 			ns = append(ns, fs...)
