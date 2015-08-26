@@ -72,3 +72,21 @@ func (s GenericSlice) IsPalindrome(f func(interface{},interface{}) bool) bool {
 
 	return true
 }
+
+//Flatten looks for GenericSlice elements in a GenericSlice, flattening out their elements such
+//that the Generic slice produced by the function is a single level GenericSlice containing all
+//embedded elements.
+func (s GenericSlice) Flatten() GenericSlice {
+	var ns GenericSlice
+	for _, v := range s {
+		switch v.(type) {
+			default:
+				ns = append(ns,v)
+		case GenericSlice:
+			fs := v.(GenericSlice).Flatten()
+			ns = append(ns, fs...)
+		}
+	}
+
+	return ns
+}

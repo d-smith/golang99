@@ -1,8 +1,9 @@
 package slices
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+	"github.com/stretchr/testify/assert"
+
 )
 
 func TestLast(t *testing.T) {
@@ -115,4 +116,16 @@ func TestIsPalindrome(t *testing.T) {
 	assert.True(t, GenericSlice{}.IsPalindrome(f))
 	assert.True(t, GenericSlice{1}.IsPalindrome(f))
 
+}
+
+func TestFlatten(t *testing.T) {
+	x := GenericSlice{GenericSlice{1,1},2,GenericSlice{3, GenericSlice{5,8}}}
+	flattened := x.Flatten()
+	assert.Equal(t, len(flattened), 6)
+	assert.Equal(t, flattened[0], 1)
+	assert.Equal(t, flattened[1], 1)
+	assert.Equal(t, flattened[2], 2)
+	assert.Equal(t, flattened[3], 3)
+	assert.Equal(t, flattened[4], 5)
+	assert.Equal(t, flattened[5], 8)
 }
