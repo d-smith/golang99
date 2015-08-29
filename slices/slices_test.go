@@ -100,21 +100,23 @@ func TestReverse(t *testing.T) {
 	assert.Equal(t, x, o)
 }
 
+func equalInts(a interface{}, b interface{}) bool {
+	x := a.(int)
+	y := b.(int)
+	return x == y
+}
+
 func TestIsPalindrome(t *testing.T) {
-	f := func(a interface{}, b interface{}) bool {
-		x := a.(int)
-		y := b.(int)
-		return x == y
-	}
+
 
 	x := GenericSlice{1,2,3,2,1}
-	assert.True(t, x.IsPalindrome(f))
+	assert.True(t, x.IsPalindrome(equalInts))
 
 	y := GenericSlice{1,2,3,4,5}
-	assert.False(t, y.IsPalindrome(f))
+	assert.False(t, y.IsPalindrome(equalInts))
 
-	assert.True(t, GenericSlice{}.IsPalindrome(f))
-	assert.True(t, GenericSlice{1}.IsPalindrome(f))
+	assert.True(t, GenericSlice{}.IsPalindrome(equalInts))
+	assert.True(t, GenericSlice{1}.IsPalindrome(equalInts))
 
 }
 
@@ -128,4 +130,23 @@ func TestFlatten(t *testing.T) {
 	assert.Equal(t, flattened[3], 3)
 	assert.Equal(t, flattened[4], 5)
 	assert.Equal(t, flattened[5], 8)
+}
+
+func TestCompress(t *testing.T) {
+	a := GenericSlice{}
+	compressed := a.Compress(equalInts)
+	assert.Equal(t, 0, len(a))
+
+	b := GenericSlice{1}
+	compressed = b.Compress(equalInts)
+	assert.Equal(t, 1, len(b))
+	assert.Equal(t, 1, b[0])
+
+	x := GenericSlice{1,2,2,3,3,3,4,4,4,4}
+	compressed = x.Compress(equalInts)
+	assert.Equal(t, 4, len(compressed))
+	assert.Equal(t, 1, compressed[0])
+	assert.Equal(t, 2, compressed[1])
+	assert.Equal(t, 3, compressed[2])
+	assert.Equal(t, 4, compressed[3])
 }

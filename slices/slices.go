@@ -91,3 +91,21 @@ func (s GenericSlice) Flatten() GenericSlice {
 
 	return ns
 }
+
+//Compress takes a slice and returns a new slice with consecutive duplicate elements remove
+func (s GenericSlice) Compress(equal func(interface{},interface{})bool) GenericSlice {
+	var ns GenericSlice
+	if len(s) == 0 {
+		return ns
+	}
+
+	ns = append(ns, s[0])
+	curVal := s[0]
+	for i := 1; i < len(s); i++ {
+		if !equal(s[i].(int), curVal.(int)) {
+			curVal = s[i]
+			ns = append(ns, curVal)
+		}
+	}
+	return ns
+}
