@@ -102,10 +102,36 @@ func (s GenericSlice) Compress(equal func(interface{},interface{})bool) GenericS
 	ns = append(ns, s[0])
 	curVal := s[0]
 	for i := 1; i < len(s); i++ {
-		if !equal(s[i].(int), curVal.(int)) {
+		if !equal(s[i], curVal) {
 			curVal = s[i]
 			ns = append(ns, curVal)
 		}
 	}
 	return ns
 }
+
+//Pack returns a new slice with consecutive duplicates packed into their own slice
+func (s GenericSlice) Pack(equal func(interface{},interface{})bool) GenericSlice {
+	var ns GenericSlice
+	if len(s) == 0 {
+		return ns
+	}
+
+	curVal := s[0]
+	ss := GenericSlice{curVal}
+	ns = append(ns, ss)
+
+	for i := 1; i < len(s); i++ {
+		if equal(s[i], curVal) {
+			ss = append(ss, curVal)
+			ns[len(ns) - 1] = ss
+		} else {
+			curVal = s[i]
+			ss = GenericSlice{curVal}
+			ns = append(ns,ss)
+		}
+	}
+
+	return ns
+}
+

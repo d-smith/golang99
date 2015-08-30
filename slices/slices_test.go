@@ -3,7 +3,6 @@ package slices
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
-
 )
 
 func TestLast(t *testing.T) {
@@ -149,4 +148,33 @@ func TestCompress(t *testing.T) {
 	assert.Equal(t, 2, compressed[1])
 	assert.Equal(t, 3, compressed[2])
 	assert.Equal(t, 4, compressed[3])
+}
+
+func TestCompact(t *testing.T) {
+	x := GenericSlice{1,2,2,3,3,3,4,4,4,4}
+	packed := x.Pack(equalInts)
+	if assert.Equal(t, 4, len(packed)) {
+
+		s1 := packed[0].(GenericSlice)
+		assert.Equal(t, 1, len(s1))
+		assert.Equal(t, 1, s1[0])
+
+		s2 := packed[1].(GenericSlice)
+		assert.Equal(t, 2, len(s2))
+		for _, v := range s2 {
+			assert.Equal(t, 2, v)
+		}
+
+		s3 := packed[2].(GenericSlice)
+		assert.Equal(t, 3, len(s3))
+		for _, v := range s3 {
+			assert.Equal(t, 3, v)
+		}
+
+		s4 := packed[3].(GenericSlice)
+		assert.Equal(t, 4, len(s4))
+		for _, v := range s4 {
+			assert.Equal(t, 4, v)
+		}
+	}
 }
