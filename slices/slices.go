@@ -4,6 +4,8 @@ import (
 	"errors"
 )
 
+//TODO - can we enhance the type to make clients assert the types of the content the
+//GS is meant to contain?
 type GenericSlice []interface{}
 
 //Last returns the last element in a slice
@@ -93,7 +95,7 @@ func (s GenericSlice) Flatten() GenericSlice {
 }
 
 //Compress takes a slice and returns a new slice with consecutive duplicate elements remove
-func (s GenericSlice) Compress(equal func(interface{},interface{})bool) GenericSlice {
+func (s GenericSlice) Compress(equal func(interface{}, interface{}) bool) GenericSlice {
 	var ns GenericSlice
 	if len(s) == 0 {
 		return ns
@@ -111,7 +113,7 @@ func (s GenericSlice) Compress(equal func(interface{},interface{})bool) GenericS
 }
 
 //Pack returns a new slice with consecutive duplicates packed into their own slice
-func (s GenericSlice) Pack(equal func(interface{},interface{})bool) GenericSlice {
+func (s GenericSlice) Pack(equal func(interface{}, interface{}) bool) GenericSlice {
 	var ns GenericSlice
 	if len(s) == 0 {
 		return ns
@@ -124,14 +126,28 @@ func (s GenericSlice) Pack(equal func(interface{},interface{})bool) GenericSlice
 	for i := 1; i < len(s); i++ {
 		if equal(s[i], curVal) {
 			ss = append(ss, curVal)
-			ns[len(ns) - 1] = ss
+			ns[len(ns)-1] = ss
 		} else {
 			curVal = s[i]
 			ss = GenericSlice{curVal}
-			ns = append(ns,ss)
+			ns = append(ns, ss)
 		}
 	}
 
 	return ns
 }
 
+//Encode performs run length encoding on slice contents
+func (s GenericSlice) Encode(equal func(interface{}, interface{}) bool) GenericSlice {
+	ns := GenericSlice{}
+	packed := s.Pack(equal)
+	for _, v := range packed {
+		ps := GenericSlice{}
+		ps = append(ps, len(v.(GenericSlice)))
+		ps = append(ps, v.(GenericSlice)[0])
+		ns = append(ns, ps)
+
+	}
+
+	return ns
+}

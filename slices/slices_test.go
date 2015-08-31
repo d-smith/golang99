@@ -1,8 +1,8 @@
 package slices
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestLast(t *testing.T) {
@@ -74,27 +74,27 @@ func TestKth(t *testing.T) {
 
 func TestReverse(t *testing.T) {
 	t.Log("Given an empty slice we can Reverse it without error")
-		s := GenericSlice{}
-		s.Reverse()
+	s := GenericSlice{}
+	s.Reverse()
 
 	t.Log("A single element slice can be reversed")
-	s = append(s,1)
+	s = append(s, 1)
 	s.Reverse()
 	assert.Equal(t, 1, len(s))
 	assert.Equal(t, 1, s[0])
 
 	t.Log("A slice with an even number of elements can be reversed")
-	e := GenericSlice{1,2,3,4}
+	e := GenericSlice{1, 2, 3, 4}
 	e.Reverse()
-	assert.Equal(t, e, GenericSlice{4,3,2,1} )
+	assert.Equal(t, e, GenericSlice{4, 3, 2, 1})
 
 	t.Log("A slice with an odd number of elements can be reversed")
-	o := GenericSlice{1,2,3,4,5}
+	o := GenericSlice{1, 2, 3, 4, 5}
 	o.Reverse()
-	assert.Equal(t, o, GenericSlice{5,4,3,2,1} )
+	assert.Equal(t, o, GenericSlice{5, 4, 3, 2, 1})
 
 	x := o.MakeReverse()
-	assert.NotEqual(t,x,o)
+	assert.NotEqual(t, x, o)
 	o.Reverse()
 	assert.Equal(t, x, o)
 }
@@ -107,11 +107,10 @@ func equalInts(a interface{}, b interface{}) bool {
 
 func TestIsPalindrome(t *testing.T) {
 
-
-	x := GenericSlice{1,2,3,2,1}
+	x := GenericSlice{1, 2, 3, 2, 1}
 	assert.True(t, x.IsPalindrome(equalInts))
 
-	y := GenericSlice{1,2,3,4,5}
+	y := GenericSlice{1, 2, 3, 4, 5}
 	assert.False(t, y.IsPalindrome(equalInts))
 
 	assert.True(t, GenericSlice{}.IsPalindrome(equalInts))
@@ -120,7 +119,7 @@ func TestIsPalindrome(t *testing.T) {
 }
 
 func TestFlatten(t *testing.T) {
-	x := GenericSlice{GenericSlice{1,1},2,GenericSlice{3, GenericSlice{5,8}}}
+	x := GenericSlice{GenericSlice{1, 1}, 2, GenericSlice{3, GenericSlice{5, 8}}}
 	flattened := x.Flatten()
 	assert.Equal(t, len(flattened), 6)
 	assert.Equal(t, flattened[0], 1)
@@ -141,7 +140,7 @@ func TestCompress(t *testing.T) {
 	assert.Equal(t, 1, len(b))
 	assert.Equal(t, 1, b[0])
 
-	x := GenericSlice{1,2,2,3,3,3,4,4,4,4}
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
 	compressed = x.Compress(equalInts)
 	assert.Equal(t, 4, len(compressed))
 	assert.Equal(t, 1, compressed[0])
@@ -151,7 +150,7 @@ func TestCompress(t *testing.T) {
 }
 
 func TestCompact(t *testing.T) {
-	x := GenericSlice{1,2,2,3,3,3,4,4,4,4}
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
 	packed := x.Pack(equalInts)
 	if assert.Equal(t, 4, len(packed)) {
 
@@ -176,5 +175,17 @@ func TestCompact(t *testing.T) {
 		for _, v := range s4 {
 			assert.Equal(t, 4, v)
 		}
+	}
+}
+
+func TestEncode(t *testing.T) {
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
+	encoded := x.Encode(equalInts)
+	assert.Equal(t, 4, len(encoded))
+	for i := 0; i < 4; i++ {
+		s := encoded[i].(GenericSlice)
+		assert.Equal(t, 2, len(s))
+		assert.Equal(t, i+1, s[0])
+		assert.Equal(t, i+1, s[1])
 	}
 }
