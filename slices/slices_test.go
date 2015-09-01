@@ -189,3 +189,18 @@ func TestEncode(t *testing.T) {
 		assert.Equal(t, i+1, s[1])
 	}
 }
+
+func TestModifiedEncode(t *testing.T) {
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
+	encoded := x.ModifiedEncode(equalInts)
+	assert.Equal(t, 4, len(encoded))
+
+	assert.Equal(t, 1, encoded[0].(int))
+
+	for i := 1; i < 4; i++ {
+		s := encoded[i].(GenericSlice)
+		assert.Equal(t, 2, len(s))
+		assert.Equal(t, i+1, s[0])
+		assert.Equal(t, i+1, s[1])
+	}
+}

@@ -151,3 +151,16 @@ func (s GenericSlice) Encode(equal func(interface{}, interface{}) bool) GenericS
 
 	return ns
 }
+
+//Modified encode performs run length encoding, but copies single elements directly
+//into the list
+func (s GenericSlice) ModifiedEncode(equal func(interface{}, interface{}) bool) GenericSlice {
+	ns := s.Encode(equal)
+	for i, v := range ns {
+		if v.(GenericSlice)[0] == 1 {
+			ns[i] = v.(GenericSlice)[1]
+		}
+	}
+
+	return ns
+}
