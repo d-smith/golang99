@@ -164,3 +164,16 @@ func (s GenericSlice) ModifiedEncode(equal func(interface{}, interface{}) bool) 
 
 	return ns
 }
+
+//Decode decodes a runlength encoded slice
+func (s GenericSlice) Decode() GenericSlice {
+	ns := GenericSlice{}
+	for _,encoded := range s {
+		n := encoded.(GenericSlice)[0].(int)
+		for i := 0; i < n; i++ {
+			ns = append(ns, encoded.(GenericSlice)[1])
+		}
+	}
+
+	return ns
+}

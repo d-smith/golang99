@@ -3,6 +3,7 @@ package slices
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"reflect"
 )
 
 func TestLast(t *testing.T) {
@@ -203,4 +204,11 @@ func TestModifiedEncode(t *testing.T) {
 		assert.Equal(t, i+1, s[0])
 		assert.Equal(t, i+1, s[1])
 	}
+}
+
+func TestDecode(t *testing.T) {
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
+	encoded := x.Encode(equalInts)
+	decoded := encoded.Decode()
+	assert.True(t, reflect.DeepEqual(x, decoded))
 }
