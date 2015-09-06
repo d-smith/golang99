@@ -212,3 +212,15 @@ func TestDecode(t *testing.T) {
 	decoded := encoded.Decode()
 	assert.True(t, reflect.DeepEqual(x, decoded))
 }
+
+func TestEncodeDirect(t *testing.T) {
+	x := GenericSlice{1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
+	encoded := x.EncodeDirect(equalInts)
+	assert.Equal(t, 4, len(encoded))
+	for i := 0; i < 4; i++ {
+		s := encoded[i].(GenericSlice)
+		assert.Equal(t, 2, len(s))
+		assert.Equal(t, i+1, s[0])
+		assert.Equal(t, i+1, s[1])
+	}
+}

@@ -177,3 +177,28 @@ func (s GenericSlice) Decode() GenericSlice {
 
 	return ns
 }
+
+
+//EncodeDirect implements runlength encoding directly without calling other methods...
+func (s GenericSlice) EncodeDirect(equal func(interface{}, interface{}) bool) GenericSlice {
+	var ns GenericSlice
+	if len(s) == 0 {
+		return ns
+	}
+
+	curVal := GenericSlice{1,s[0]}
+	ns = append(ns, curVal)
+
+
+	for i := 1; i < len(s); i++ {
+		if equal(s[i], curVal[1]) {
+			curVal[0] = curVal[0].(int) + 1
+			ns[len(ns) - 1] = curVal
+		} else {
+			curVal = GenericSlice{1,s[i]}
+			ns = append(ns, curVal)
+		}
+	}
+
+	return ns
+}
