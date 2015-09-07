@@ -202,3 +202,14 @@ func (s GenericSlice) EncodeDirect(equal func(interface{}, interface{}) bool) Ge
 
 	return ns
 }
+
+func (s GenericSlice) Duplicate() GenericSlice {
+	ns := make([]interface{}, 2 * len(s))
+	var i int
+	for _, v := range s {
+		ns[i] = v
+		ns[i + 1] = v
+		i += 2
+	}
+	return ns
+}

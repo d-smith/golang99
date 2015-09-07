@@ -224,3 +224,9 @@ func TestEncodeDirect(t *testing.T) {
 		assert.Equal(t, i+1, s[1])
 	}
 }
+
+func TestDuplicate(t *testing.T) {
+	x := GenericSlice{1,2,3}
+	y := x.Duplicate()
+	assert.True(t, reflect.DeepEqual(y, GenericSlice{1,1,2,2,3,3}))
+}
