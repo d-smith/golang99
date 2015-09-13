@@ -230,3 +230,9 @@ func TestDuplicate(t *testing.T) {
 	y := x.Duplicate()
 	assert.True(t, reflect.DeepEqual(y, GenericSlice{1,1,2,2,3,3}))
 }
+
+func TestDuplicateN(t *testing.T) {
+	x := GenericSlice{1,2,3}
+	y := x.DuplicateN(2)
+	assert.True(t, reflect.DeepEqual(y, GenericSlice{1,1,2,2,3,3}))
+}

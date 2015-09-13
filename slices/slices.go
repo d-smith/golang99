@@ -213,3 +213,15 @@ func (s GenericSlice) Duplicate() GenericSlice {
 	}
 	return ns
 }
+
+func (s GenericSlice) DuplicateN(n int) GenericSlice {
+	ns := make([]interface{}, n * len(s))
+	var i int
+	for _,v := range s {
+		for j := 0; j < n; j++ {
+			ns[i] = v
+			i += 1
+		}
+	}
+	return ns
+}
